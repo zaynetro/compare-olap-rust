@@ -23,7 +23,7 @@ fn main() {
         .pragma_update(None, "journal_mode", "WAL")
         .unwrap();
     sqlite_conn
-        .execute(
+        .execute_batch(
             r#"
 CREATE TABLE events (
   id TEXT NOT NULL,
@@ -33,10 +33,7 @@ CREATE TABLE events (
   event_type TEXT NOT NULL,
   payload TEXT
 );
-CREATE INDEX events_timestamp ON events(timestamp);
-CREATE INDEX events_event_type ON events(event_type);
 "#,
-            [],
         )
         .unwrap();
 
