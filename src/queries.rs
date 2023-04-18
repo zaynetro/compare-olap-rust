@@ -228,14 +228,11 @@ SELECT AVG(TRY_CAST(fields->0->>'value' AS INTEGER)) AS average
     exec_duck_typed(
         &duck_typed_conn,
         r#"
-WITH form_submissions AS (
-    SELECT payload.fields AS fields, payload.form_type as form_type
-      FROM events
-     WHERE event_type = 'form_submit'
-)
-SELECT AVG(TRY_CAST(fields[1].value AS INTEGER)) AS average
-  FROM form_submissions
- WHERE form_type = 'feedback'
+SELECT AVG(TRY_CAST(payload.fields[1].value AS INTEGER)) AS average
+  FROM events
+ WHERE
+     event_type = 'form_submit'
+     AND payload.form_type = 'feedback'
 "#,
         vec!["average score"],
     )
@@ -398,13 +395,10 @@ SELECT date, COUNT(*) AS count
     exec_duck_typed(
         &duck_typed_conn,
         r#"
-WITH page_loads AS (
-  SELECT strftime(timestamp, '%Y-%m-%d') AS date
-    FROM events
-   WHERE event_type = 'page_load'
-)
-SELECT date, COUNT(*) AS count
-  FROM page_loads
+SELECT strftime(timestamp, '%Y-%m-%d') AS date, COUNT(*) AS count
+  FROM events
+ WHERE
+     event_type = 'page_load'
  GROUP BY date
  ORDER BY date
  LIMIT 10
