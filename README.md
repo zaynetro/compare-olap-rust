@@ -8,6 +8,8 @@
 * [Polars](https://www.pola.rs/)
 * [Apache DataFusion](https://arrow.apache.org/datafusion/)
 
+Read [linked blog post](https://www.zaynetro.com/post/2023-playing-with-olap/) to learn more.
+
 
 ## Preparation steps
 
