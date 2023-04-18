@@ -26,5 +26,9 @@ name = "gen_data"
 path = "src/gen_data.rs"
 
 [[bin]]
+name = "gen_data_normalized"
+path = "src/gen_data_normalized.rs"
+
+[[bin]]
 name = "queries"
 path = "src/queries.rs"
